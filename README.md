@@ -1,3 +1,3 @@
-# CSV-Upload-Project
-#### Tech stack: Node-js
-- In this project, i have used "MULTER" library (We can also say middleware) to upload the CSV file.
+# CSV-UPLOAD
+#### Tech stack: Node-js , Tailwind CSS
+-For upload the CSV file here i use multer library.
