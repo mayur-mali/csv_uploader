@@ -4,7 +4,7 @@
   "description": "Upload CSV file and show the data in it.",
   "main": "index.js",
   "scripts": {
-    "start": "node index.js"
+    "start": "nodemon index.js"
   },
   "author": "Mayur Mali",
   "license": "ISC",
