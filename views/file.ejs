@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- <link rel="stylesheet" href="/css/file.css"> -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <title>File : <%= title %> </title>
+</head>
+
+<body>
+    <div class="">
+        <div class="w-full bg-white">
+            <a href="/" class="flex w-40 bg-gray-200 py-2 px-4  rounded-xl m-5">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+                    stroke="currentColor" class="w-6 h-6 mr-3">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M10.5 19.5L3 12m0 0l7.5-7.5M3 12h18" />
+                </svg>
+
+                Home</a>
+        </div>
+
+        <div class="max-w-5xl w-full mx-auto border bg-gray-50 gap-x-10 flex justify-between p-4">
+
+            <input type="text" name="search" class="focus:outline-none py-2 px-4 w-full" id="search"
+                placeholder="Enter Text"></input>
+            <div class="space-x-3 flex w-full items-center">
+                <span>Search Using</span>
+                <select name="option" id="opt">
+                    <% for(let i=0; i<head.length; i++){ %>
+                    <option value="<%= i %>"><%= head[i] %></option>
+                    <% } %>
+                </select>
+                <span>(It's Case Sensitive)</span>
+            </div>
+        </div>
+
+
+
+        <table id="table" class="ml-4 mt-3 border-collapse border border-slate-500">
+
+            <tr>
+                <% for(let i=0; i<head.length; i++){ %>
+                <th class="border border-slate-600 ">
+                    <%= head[i] %>
+                </th>
+                <% } %>
+            </tr>
+
+            <% for(let i=0; i<data.length; i++){ %>
+            <tr>
+                <% for(let j=0; j<head.length; j++){ %>
+                <td class="border border-slate-600">
+                    <%= data[i][head[j]] %>
+                </td>
+
+                <% } %>
+            </tr>
+            <% } %>
+
+        </table>
+
+
+
+    </div>
+    <script>
+        //remove highlighting
+        function removeHighlighting(highlightedElements) {
+            highlightedElements.each(function () {
+                var element = $(this);
+                element.replaceWith(element.html());
+            })
+        }
+
+        // add highlighting
+        function addHighlighting(element, textToHighlight) {
+            var text = element.text();
+            var highlightedText = '<em>' + textToHighlight + '</em>';
+            var newText = text.replace(textToHighlight, highlightedText);
+
+            element.html(newText);
+        }
+
+        //getting index value
+        function getValue() {
+            return $("#opt :selected").val();
+        }
+
+        //searching value
+        $("#search").on("keyup", function () {
+            var value = $(this).val();
+            var searchval = getValue();
+
+            $("table tr").each(function (index) {
+                if (index != 0) {
+                    $row = $(this);
+                    var $tdElement = $row.find(`td:nth-child(${eval(searchval+"+"+1)}`);
+
+                    var id = $tdElement.text();
+                    var matchedIndex = id.indexOf(value);
+                    if (matchedIndex < 0) {
+                        $row.hide();
+                    } else {
+                        //highlight matching text, passing element and matched text
+                        addHighlighting($tdElement, value);
+                        $row.show();
+                    }
+
+                }
+            });
+        });
+    </script>
+</body>
+
+</html>
